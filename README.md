@@ -5,7 +5,6 @@ This repository contains a monorepo skeleton for a modular Discord bot platform.
 ## Packages
 
 
-
 - `@terminal-x/bot` – placeholder for the Discord bot runtime.
 - `@terminal-x/api` – placeholder for the API service.
 - `@terminal-x/shared` – shared utilities and types.

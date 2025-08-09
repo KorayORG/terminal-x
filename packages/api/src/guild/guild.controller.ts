@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  Delete,
+} from '@nestjs/common';
+
 import { GuildService } from './guild.service';
 import { AutomodConfig, ModerationConfig } from '@terminal-x/shared';
 
@@ -45,4 +56,72 @@ export class GuildController {
   getLogs(@Param('id') guildId: string) {
     return this.service.getLogs(guildId);
   }
+
+
+  // Embed templates
+  @Get('templates')
+  getTemplates(@Param('id') guildId: string) {
+    return this.service.getTemplates(guildId);
+  }
+
+  @Post('templates')
+  createTemplate(
+    @Param('id') guildId: string,
+    @Body() body: any,
+  ) {
+    return this.service.createTemplate(guildId, body);
+  }
+
+  @Delete('templates/:templateId')
+  deleteTemplate(
+    @Param('id') guildId: string,
+    @Param('templateId') templateId: string,
+  ) {
+    return this.service.deleteTemplate(guildId, templateId);
+  }
+
+  // Announcements
+  @Get('announcements')
+  getAnnouncements(@Param('id') guildId: string) {
+    return this.service.getAnnouncements(guildId);
+  }
+
+  @Post('announcements')
+  createAnnouncement(
+    @Param('id') guildId: string,
+    @Body() body: any,
+  ) {
+    return this.service.createAnnouncement(guildId, body);
+  }
+
+  @Post('announcements/:announcementId/cancel')
+  cancelAnnouncement(
+    @Param('id') guildId: string,
+    @Param('announcementId') announcementId: string,
+  ) {
+    return this.service.cancelAnnouncement(guildId, announcementId);
+  }
+
+  // Reminders
+  @Get('reminders')
+  getReminders(@Param('id') guildId: string) {
+    return this.service.getReminders(guildId);
+  }
+
+  @Post('reminders')
+  createReminder(
+    @Param('id') guildId: string,
+    @Body() body: any,
+  ) {
+    return this.service.createReminder(guildId, body);
+  }
+
+  @Delete('reminders/:reminderId')
+  deleteReminder(
+    @Param('id') guildId: string,
+    @Param('reminderId') reminderId: string,
+  ) {
+    return this.service.deleteReminder(guildId, reminderId);
+  }
+
 }

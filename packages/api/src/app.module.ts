@@ -6,8 +6,6 @@ import { GuildModule } from './guild/guild.module';
 @Module({
   imports: [AuthModule, GuildModule],
 
-
-@Module({
-  imports: [AuthModule],
+})
 
 export class AppModule {}

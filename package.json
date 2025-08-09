@@ -9,7 +9,9 @@
     "bot:dev": "npm --workspace @terminal-x/bot run dev",
     "api:dev": "npm --workspace @terminal-x/api run dev",
     "web:dev": "npm --workspace @terminal-x/web run dev",
-    "lint": "eslint .",
+
+    "lint": "npx eslint@8 .",
+
     "format": "prettier --write .",
     "test": "npm-run-all -p bot:test api:test",
     "bot:test": "npm --workspace @terminal-x/bot test",

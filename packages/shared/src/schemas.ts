@@ -1,6 +1,4 @@
 import { z } from 'zod';
-
-
 export const ModerationConfigSchema = z.object({
   enabled: z.boolean().default(true),
   modLogChannelId: z.string().optional().nullable(),
@@ -46,3 +44,33 @@ export const CaseActionSchema = z.enum([
   'DELETE_MSG',
 ]);
 
+
+export const EmbedFieldSchema = z.object({
+  name: z.string(),
+  value: z.string(),
+  inline: z.boolean().optional(),
+});
+
+export const EmbedTemplateSchema = z.object({
+  name: z.string(),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  color: z.number().int().optional(),
+  thumbnail: z.string().url().optional(),
+  image: z.string().url().optional(),
+  footer: z.string().optional(),
+  fields: z.array(EmbedFieldSchema).optional(),
+});
+
+export const AnnouncementSchema = z.object({
+  channelId: z.string(),
+  templateId: z.string().optional(),
+  content: z.string().optional(),
+  scheduleAt: z.string().datetime().optional(),
+});
+
+export const ReminderSchema = z.object({
+  channelId: z.string().optional(),
+  content: z.string(),
+  remindAt: z.string().datetime(),
+});

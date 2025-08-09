@@ -134,3 +134,43 @@ model Ban {
   createdAt DateTime @default(now())
 }
 
+
+model EmbedTemplate {
+  id          String   @id @default(cuid())
+  guildId     String   @index
+  name        String
+  title       String?
+  description String?
+  color       Int?
+  thumbnail   String?
+  image       String?
+  footer      String?
+  fields      Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Announcement {
+  id         String   @id @default(cuid())
+  guildId    String   @index
+  channelId  String
+  templateId String?
+  content    String?
+  payload    Json?
+  scheduleAt DateTime?
+  createdBy  String
+  createdAt  DateTime @default(now())
+  status     String   @default("SCHEDULED")
+}
+
+model Reminder {
+  id        String   @id @default(cuid())
+  guildId   String   @index
+  userId    String   @index
+  channelId String?
+  content   String
+  remindAt  DateTime
+  createdAt DateTime @default(now())
+  delivered Boolean  @default(false)
+}
+

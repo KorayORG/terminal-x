@@ -11,6 +11,8 @@
 
       "@terminal-x/shared": ["../shared/src"],
 
+
+
       "@terminal-x/shared/*": ["../shared/src/*"]
     },
     "experimentalDecorators": true,

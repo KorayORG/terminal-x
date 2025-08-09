@@ -5,6 +5,10 @@ import {
   ModerationConfigSchema,
   AutomodConfig,
   ModerationConfig,
+  EmbedTemplateSchema,
+  AnnouncementSchema,
+  ReminderSchema,
+
 } from '@terminal-x/shared';
 
 @Injectable()
@@ -64,4 +68,68 @@ export class GuildService {
       take: 50,
     });
   }
+
+
+  // Templates
+  getTemplates(guildId: string) {
+    return this.prisma.embedTemplate.findMany({ where: { guildId } });
+  }
+
+  createTemplate(guildId: string, data: any) {
+    const parsed = EmbedTemplateSchema.parse(data);
+    return this.prisma.embedTemplate.create({
+      data: { guildId, ...parsed },
+    });
+  }
+
+  deleteTemplate(guildId: string, templateId: string) {
+    return this.prisma.embedTemplate.deleteMany({
+      where: { id: templateId, guildId },
+    });
+  }
+
+  // Announcements
+  getAnnouncements(guildId: string) {
+    return this.prisma.announcement.findMany({ where: { guildId } });
+  }
+
+  createAnnouncement(guildId: string, data: any) {
+    const parsed = AnnouncementSchema.parse(data);
+    return this.prisma.announcement.create({
+      data: {
+        guildId,
+        status: 'SCHEDULED',
+        ...parsed,
+        scheduleAt: parsed.scheduleAt ? new Date(parsed.scheduleAt) : null,
+      },
+    });
+  }
+
+  cancelAnnouncement(guildId: string, announcementId: string) {
+    return this.prisma.announcement.updateMany({
+      where: { id: announcementId, guildId },
+      data: { status: 'CANCELLED' },
+    });
+  }
+
+  // Reminders
+  getReminders(guildId: string) {
+    return this.prisma.reminder.findMany({ where: { guildId } });
+  }
+
+  createReminder(guildId: string, data: any) {
+    const parsed = ReminderSchema.parse(data);
+    return this.prisma.reminder.create({
+      data: {
+        guildId,
+        ...parsed,
+        remindAt: new Date(parsed.remindAt),
+      },
+    });
+  }
+
+  deleteReminder(guildId: string, reminderId: string) {
+    return this.prisma.reminder.delete({ where: { id: reminderId } });
+  }
+
 }
