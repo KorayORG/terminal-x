@@ -4,7 +4,9 @@
     "module": "commonjs",
     "target": "es2020",
     "declaration": true,
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true
   },
-  "include": ["src"]
+  "include": ["src", "test"],
+  "references": [{ "path": "../shared" }]
 }
