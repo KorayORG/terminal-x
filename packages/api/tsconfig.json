@@ -8,6 +8,9 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
+
+      "@terminal-x/shared": ["../shared/src"],
+
       "@terminal-x/shared/*": ["../shared/src/*"]
     },
     "experimentalDecorators": true,

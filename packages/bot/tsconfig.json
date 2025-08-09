@@ -5,7 +5,14 @@
     "target": "es2020",
     "declaration": true,
     "strict": true,
-    "esModuleInterop": true
+
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@terminal-x/shared": ["../shared/src"],
+      "@terminal-x/shared/*": ["../shared/src/*"]
+    }
+
   },
   "include": ["src", "test"],
   "references": [{ "path": "../shared" }]
