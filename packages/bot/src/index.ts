@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
 import { data as pingData, execute as pingExecute } from './commands/ping';
 import { data as rrData, execute as rrExecute, reactionRoleMessages } from './commands/reactionroles';
+import { data as welcomeData, execute as welcomeExecute, handleMemberJoin } from './commands/welcome';
 
 import { data as modData, execute as modExecute } from './commands/mod';
 import { data as announceData, execute as announceExecute } from './commands/announce';
