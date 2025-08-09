@@ -17,6 +17,7 @@ model User {
   createdAt    DateTime @default(now())
 }
 
+
 model Guild {
   id        String   @id
   createdAt DateTime @default(now())
@@ -133,6 +134,7 @@ model Ban {
   createdAt DateTime @default(now())
 }
 
+
 model EmbedTemplate {
   id          String   @id @default(cuid())
   guildId     String   @index
@@ -171,3 +173,4 @@ model Reminder {
   createdAt DateTime @default(now())
   delivered Boolean  @default(false)
 }
+

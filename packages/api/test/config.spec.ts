@@ -4,6 +4,7 @@ import {
   EmbedTemplateSchema,
   AnnouncementSchema,
   ReminderSchema,
+
 } from '@terminal-x/shared';
 
 describe('config schemas', () => {
@@ -17,6 +18,7 @@ describe('config schemas', () => {
       AutomodConfigSchema.parse({ capsThresholdPct: 'high' as any })
     ).toThrow();
   });
+
 
   it('validates embed template', () => {
     const tmpl = EmbedTemplateSchema.parse({ name: 'basic' });
@@ -38,4 +40,6 @@ describe('config schemas', () => {
     });
     expect(rem.content).toBe('hi');
   });
+
+
 });

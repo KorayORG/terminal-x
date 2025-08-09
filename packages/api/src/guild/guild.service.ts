@@ -8,6 +8,7 @@ import {
   EmbedTemplateSchema,
   AnnouncementSchema,
   ReminderSchema,
+
 } from '@terminal-x/shared';
 
 @Injectable()
@@ -67,6 +68,7 @@ export class GuildService {
       take: 50,
     });
   }
+
 
   // Templates
   getTemplates(guildId: string) {
@@ -129,4 +131,5 @@ export class GuildService {
   deleteReminder(guildId: string, reminderId: string) {
     return this.prisma.reminder.delete({ where: { id: reminderId } });
   }
+
 }

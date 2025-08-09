@@ -1,3 +1,4 @@
+
 import {
   Body,
   Controller,
@@ -8,6 +9,7 @@ import {
   Query,
   Delete,
 } from '@nestjs/common';
+
 import { GuildService } from './guild.service';
 import { AutomodConfig, ModerationConfig } from '@terminal-x/shared';
 
@@ -54,6 +56,7 @@ export class GuildController {
   getLogs(@Param('id') guildId: string) {
     return this.service.getLogs(guildId);
   }
+
 
   // Embed templates
   @Get('templates')
@@ -120,4 +123,5 @@ export class GuildController {
   ) {
     return this.service.deleteReminder(guildId, reminderId);
   }
+
 }
