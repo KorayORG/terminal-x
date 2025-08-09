@@ -1,0 +1,40 @@
+{
+  "name": "terminal-x",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm-run-all -p bot:dev api:dev web:dev",
+    "bot:dev": "npm --workspace @terminal-x/bot run dev",
+    "api:dev": "npm --workspace @terminal-x/api run dev",
+    "web:dev": "npm --workspace @terminal-x/web run dev",
+    "lint": "npx eslint@8 .",
+    "format": "prettier --write .",
+    "test": "npm-run-all -p bot:test api:test",
+    "bot:test": "npm --workspace @terminal-x/bot test",
+    "api:test": "npm --workspace @terminal-x/api test",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx,json}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "**/*.md": "prettier --write"
+  },
+  "@typescript-eslint/eslint-plugin": "^6.21.0",
+  "@typescript-eslint/parser": "^6.21.0",
+  "eslint-config-prettier": "^9.1.0",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.3.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.8",
+    "typescript": "^5.4.2"
+  }
+}
