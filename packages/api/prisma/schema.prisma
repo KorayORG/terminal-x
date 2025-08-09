@@ -1,0 +1,134 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String @id
+  discordId    String @unique
+  username     String
+  avatar       String
+  accessToken  String
+  refreshToken String
+  createdAt    DateTime @default(now())
+}
+
+model Guild {
+  id        String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  moderation ModerationConfig?
+  automod    AutomodConfig?
+  cases      ModerationCase[]
+  logs       LogEvent[]
+}
+
+model ModerationConfig {
+  guildId          String  @id
+  enabled          Boolean @default(true)
+  modLogChannelId  String?
+  quarantineRoleId String?
+  escalationStages Json?
+  dmNotifyOnAction Boolean @default(true)
+  defaultMuteMins  Int     @default(10)
+  guild            Guild   @relation(fields: [guildId], references: [id])
+}
+
+model AutomodConfig {
+  guildId             String  @id
+  enabled             Boolean @default(true)
+  exemptRoleIds       String[] @default([])
+  exemptChannelIds    String[] @default([])
+  profanityEnabled    Boolean @default(true)
+  linkBlockEnabled    Boolean @default(true)
+  inviteBlockEnabled  Boolean @default(true)
+  capsEnabled         Boolean @default(true)
+  repeatEnabled       Boolean @default(true)
+  spamEnabled         Boolean @default(true)
+  mentionSpamEnabled  Boolean @default(true)
+  emojiSpamEnabled    Boolean @default(false)
+  attachmentFilter    Boolean @default(false)
+  nsfwImageCheck      Boolean @default(false)
+  capsThresholdPct    Int     @default(80)
+  repeatThreshold     Int     @default(3)
+  spamMsgsPerInterval Int     @default(6)
+  spamIntervalSec     Int     @default(4)
+  mentionMaxPerMsg    Int     @default(5)
+  emojiMaxPerMsg      Int     @default(10)
+  actionChain         Json?
+  guild               Guild   @relation(fields: [guildId], references: [id])
+}
+
+enum CaseAction {
+  WARN
+  MUTE
+  UNMUTE
+  KICK
+  BAN
+  UNBAN
+  SOFTBAN
+  NOTE
+  TIMEOUT
+  DELETE_MSG
+}
+
+model ModerationCase {
+  id          String   @id @default(cuid())
+  guildId     String
+  actorId     String
+  targetId    String
+  action      CaseAction
+  reason      String?
+  reference   String?
+  durationSec Int?
+  createdAt   DateTime @default(now())
+  metadata    Json?
+  guild       Guild    @relation(fields: [guildId], references: [id])
+
+  @@index([guildId, createdAt])
+}
+
+model LogEvent {
+  id        String   @id @default(cuid())
+  guildId   String
+  actorId   String?
+  targetId  String?
+  type      String
+  payload   Json?
+  createdAt DateTime @default(now())
+  guild     Guild    @relation(fields: [guildId], references: [id])
+
+  @@index([guildId, createdAt])
+}
+
+model Warning {
+  id        String   @id @default(cuid())
+  guildId   String
+  userId    String
+  actorId   String
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
+model Mute {
+  id        String   @id @default(cuid())
+  guildId   String
+  userId    String  @unique
+  actorId   String
+  reason    String?
+  until     DateTime?
+  createdAt DateTime @default(now())
+}
+
+model Ban {
+  id        String   @id @default(cuid())
+  guildId   String
+  userId    String  @unique
+  actorId   String
+  reason    String?
+  createdAt DateTime @default(now())
+}
