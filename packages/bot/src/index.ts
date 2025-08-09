@@ -4,6 +4,8 @@ import { data as pingData, execute as pingExecute } from './commands/ping';
 
 import { data as modData, execute as modExecute } from './commands/mod';
 import { data as announceData, execute as announceExecute } from './commands/announce';
+import { data as remindData, execute as remindExecute } from './commands/remind';
+import { data as pollData, execute as pollExecute } from './commands/poll';
 import pino from 'pino';
 import { checkMessage } from './automod';
 
@@ -27,15 +29,17 @@ client.once('ready', () => {
 
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
-  if (interaction.commandName === 'ping') {
+    if (interaction.commandName === 'ping') {
     await pingExecute(interaction);
-  }
-
-  if (interaction.commandName === 'mod') {
+  } else if (interaction.commandName === 'mod') {
     await modExecute(interaction);
-  }
-  if (interaction.commandName === 'announce') {
+  } else if (interaction.commandName === 'announce') {
     await announceExecute(interaction);
+  } else if (interaction.commandName === 'remind') {
+    await remindExecute(interaction);
+  } else if (interaction.commandName === 'poll') {
+    await pollExecute(interaction);
+  }
   }
 
 });
@@ -63,10 +67,12 @@ async function main() {
   const rest = new REST({ version: '10' }).setToken(token);
   await rest.put(Routes.applicationCommands(clientId), {
 
-    body: [pingData.toJSON(), modData.toJSON(), announceData.toJSON()],
-
-  });
-  await client.login(token);
-}
+      body: [
+    pingData.toJSON(),
+    modData.toJSON(),
+    announceData.toJSON(),
+    remindData.toJSON(),
+    pollData.toJSON(),
+  ],
 
 main().catch((err) => logger.error(err));
