@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+
 export const ModerationConfigSchema = z.object({
   enabled: z.boolean().default(true),
   modLogChannelId: z.string().optional().nullable(),
@@ -44,3 +45,4 @@ export const CaseActionSchema = z.enum([
   'TIMEOUT',
   'DELETE_MSG',
 ]);
+
